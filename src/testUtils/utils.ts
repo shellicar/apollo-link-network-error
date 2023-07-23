@@ -1,6 +1,6 @@
-import { ApolloLink, Observable, execute } from '@apollo/client';
+import { ApolloLink, Observable, execute, gql} from '@apollo/client/core';
 import { NetworkErrorLink, NetworkErrorHandler } from '../NetworkErrorLink'
-import gql from 'graphql-tag'
+// import gql from 'graphql-tag'
 
 export const FAKE_QUERY = gql`
   query FakeQuery {

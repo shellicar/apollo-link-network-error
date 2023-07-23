@@ -1,10 +1,4 @@
-import {
-  ApolloLink,
-  FetchResult,
-  NextLink,
-  Observable,
-  Operation,
-} from '@apollo/client'
+import { ApolloLink, FetchResult, NextLink, Observable, Operation, } from '@apollo/client/core'
 
 export interface INetworkResponse {
   networkError: any

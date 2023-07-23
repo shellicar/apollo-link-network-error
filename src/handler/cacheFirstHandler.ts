@@ -1,4 +1,4 @@
-import { DocumentNode } from '@apollo/client';
+import { DocumentNode } from '@apollo/client/core';
 import { INetworkResponse } from '../NetworkErrorLink'
 
 interface Query<TVariables> {
@@ -28,7 +28,8 @@ export const cacheFirstHandler = (cache: ICacheShape) => ({
   networkError: error,
   operation,
 }: INetworkResponse) => {
-  if (!operation.getContext().__skipErrorAccordingCache__) {
+  const skipFlag = operation.getContext().__skipErrorAccordingCache__;
+  if (!skipFlag) {
     throw error
   }
 
