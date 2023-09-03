@@ -20,6 +20,7 @@ export const cacheFirstHandler = (cache: ICacheShape) => ({
           variables: operation.variables,
           optimistic: false
         })
+        console.log('result', result);
         if (result != null) {
           return result;
         }
