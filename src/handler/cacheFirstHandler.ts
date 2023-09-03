@@ -1,42 +1,24 @@
-import { DocumentNode, Operation } from '@apollo/client/core';
+import { ApolloCache, NormalizedCacheObject } from '@apollo/client/core';
 import { INetworkResponse } from '../NetworkErrorLink'
-import { OperationDefinitionNode } from 'graphql';
 
-interface Query<TVariables> {
-  query: DocumentNode
-  variables?: TVariables
-}
-
-interface ReadOptions<TVariables = any> extends Query<TVariables> {
-  rootId?: string
-  previousResult?: any
-}
-
-interface WriteOptions<TResult = any, TVariables = any>
-  extends Query<TVariables> {
-  dataId: string
-  result: TResult
-}
-
-export interface ICacheShape {
-  read<T, TVariables = any>(query: ReadOptions<TVariables>): T | null
-  write<TResult = any, TVariables = any>(
-    write: WriteOptions<TResult, TVariables>
-  ): void
-}
+export type ICacheShape = ApolloCache<NormalizedCacheObject>;
 
 export const cacheFirstHandler = (cache: ICacheShape) => ({
   networkError: error,
   operation,
 }: INetworkResponse) => {
+  console.log('cacheFirstHandler');
   const skipFlag = operation.getContext().__skipErrorAccordingCache__;
+  console.log('skipFlag', skipFlag);
   if (skipFlag) {
     const opDefinition = operation.query.definitions[0];
     if (opDefinition.kind === 'OperationDefinition') {
       if (opDefinition.operation === 'query') {
+        console.log('reading from cache');
         const result = cache.read<any>({
           query: operation.query,
           variables: operation.variables,
+          optimistic: false
         })
         if (result != null) {
           return result;
