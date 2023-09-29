@@ -39,7 +39,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@apollo/client": "^3.8.3",
+    "@apollo/client": "^3.8.4",
     "@types/jest": "^29.5.4",
     "git-cz": "^4.9.0",
     "graphql": "^16.8.0",
